@@ -27,8 +27,8 @@ def pascal_triangle(n):
                     temp = [1]
                     j = 0
                     while j < counter - 2:
-                        temp.append(pascal_list[counter - 2][j]
-                                    + pascal_list[counter - 2][j+1])
+                        temp.append(pascal_list[counter - 2][j] +
+                                    pascal_list[counter - 2][j+1])
                         j += 1
                     temp.append(1)
                     sub_list = temp
