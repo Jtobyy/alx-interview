@@ -18,7 +18,7 @@ def canUnlockAll(boxes):
                     if key == box:
                         found = True
                         break
-                if found == True:
+                if found is True:
                     break
             counter += 1
         else:
