@@ -18,7 +18,6 @@ pattern = re.compile(r'(?P<ip_address>(\d{1,3}\.){3}\d{1,3}) '
                      r'(?P<file_size>\d+)\n')
 try:
     for line in sys.stdin:
-        line = sys.stdin.readline()
         i += 1
         match = pattern.fullmatch(line)
         if match is None or match.group('status_code') \
@@ -28,7 +27,7 @@ try:
                 for key, val in status_codes_dict.items():
                     if val != 0:
                         print('{}: {}'.format(key, val))
-                continue
+            continue
         total_size += int(match.group('file_size'))
         status_code = match.group('status_code')
         status_codes_dict[status_code] += 1
@@ -37,6 +36,12 @@ try:
             for key, val in status_codes_dict.items():
                 if val != 0:
                     print('{}: {}'.format(key, val))
+    else:
+        print('File size: {}'.format(total_size))
+        for key, val in status_codes_dict.items():
+            if val != 0:
+                print('{}: {}'.format(key, val))
+
 except KeyboardInterrupt:
     print('File size: {}'.format(total_size))
     for key, val in status_codes_dict.items():
