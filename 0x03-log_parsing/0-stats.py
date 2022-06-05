@@ -22,7 +22,7 @@ while True:
         i += 1
         match = pattern.fullmatch(line)
         if match is None or match.group('status_code') \
-        not in status_codes_dict:
+           not in status_codes_dict:
             if i % 10 == 0:
                 print('File size: {}'.format(total_size))
                 for key, val in status_codes_dict.items():
