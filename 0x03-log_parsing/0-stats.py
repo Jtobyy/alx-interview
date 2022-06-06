@@ -7,8 +7,8 @@ import sys
 
 
 total_size = 0
-status_codes_dict = {'200': 0, '301': 0, '400': 0, '401': 0,
-                     '403': 0, '404': 0, '405': 0, '500': 0}
+status_codes_dict = {200: 0, 301: 0, 400: 0, 401: 0,
+                     403: 0, 404: 0, 405: 0, 500: 0}
 i = 0
 pattern = re.compile(r'(?P<ip_address>(\d{1,3}\.){3}\d{1,3}) '
                      r'- (?P<date>\[\d{1,4}-\d{1,2}-\d{1,2} '
@@ -20,8 +20,11 @@ try:
     for line in sys.stdin:
         i += 1
         match = pattern.fullmatch(line)
-        if match is None or match.group('status_code') \
-           not in status_codes_dict:
+        try:
+            status_code = int(match.group('status_code'))
+        except AttributeError:
+            status_code = ''
+        if match is None or status_code not in status_codes_dict:
             if i % 10 == 0:
                 print('File size: {}'.format(total_size))
                 for key, val in status_codes_dict.items():
@@ -29,7 +32,6 @@ try:
                         print('{}: {}'.format(key, val))
             continue
         total_size += int(match.group('file_size'))
-        status_code = match.group('status_code')
         status_codes_dict[status_code] += 1
         if i % 10 == 0:
             print('File size: {}'.format(total_size))
@@ -38,7 +40,7 @@ try:
                     print('{}: {}'.format(key, val))
     else:
         print('File size: {}'.format(total_size))
-        for key, val in status_codes_dict.items():
+        for key, val in sorted(status_codes_dict.items()):
             if val != 0:
                 print('{}: {}'.format(key, val))
 
