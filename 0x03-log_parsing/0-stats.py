@@ -24,12 +24,15 @@ try:
             status_code = int(match.group('status_code'))
         except AttributeError:
             status_code = ''
-        if match is None or status_code not in status_codes_dict:
+        if match is None:
             if i % 10 == 0:
                 print('File size: {}'.format(total_size))
                 for key, val in status_codes_dict.items():
                     if val != 0:
                         print('{}: {}'.format(key, val))
+            continue
+        if status_code not in status_codes_dict:
+            total_size += int(match.group('file_size'))
             continue
         total_size += int(match.group('file_size'))
         status_codes_dict[status_code] += 1
