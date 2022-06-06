@@ -10,7 +10,7 @@ total_size = 0
 status_codes_dict = {200: 0, 301: 0, 400: 0, 401: 0,
                      403: 0, 404: 0, 405: 0, 500: 0}
 i = 0
-pattern = re.compile(r'(?P<ip_address>(\d{1,3}\.){3}\d{1,3}) '
+pattern = re.compile(r'(?P<ip_address>.+) '
                      r'- (?P<date>\[\d{1,4}-\d{1,2}-\d{1,2} '
                      r'\d+:\d+:\d+.+\]) "\w+ /\w+/\d+ '
                      r'\w+/\d.+" (?P<status_code>200|301|'
