@@ -35,7 +35,7 @@ try:
         status_codes_dict[status_code] += 1
         if i % 10 == 0:
             print('File size: {}'.format(total_size))
-            for key, val in status_codes_dict.items():
+            for key, val in sorted(status_codes_dict.items()):
                 if val != 0:
                     print('{}: {}'.format(key, val))
     else:
@@ -46,6 +46,6 @@ try:
 
 except KeyboardInterrupt:
     print('File size: {}'.format(total_size))
-    for key, val in status_codes_dict.items():
+    for key, val in sorted(status_codes_dict.items()):
         if val != 0:
             print('{}: {}'.format(key, val))
