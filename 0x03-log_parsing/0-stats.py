@@ -13,17 +13,12 @@ i = 0
 pattern = re.compile(r'(?P<ip_address>.+)\s*'
                      r'-\s*(?P<date>\[\d{1,4}-\d{1,2}-\d{1,2} '
                      r'\d+:\d+:\d+.+\]) "\w+ /\w+/\d+ '
-                     r'\w+/\d.+" (?P<status_code>200|301|'
-                     r'400|401|403|404|405|500) '
+                     r'\w+/\d.+" (?P<status_code>.*) '
                      r'(?P<file_size>\d+)\n')
 try:
     for line in sys.stdin:
         i += 1
         match = pattern.fullmatch(line)
-        try:
-            status_code = int(match.group('status_code'))
-        except AttributeError:
-            status_code = ''
         if match is None:
             if i % 10 == 0:
                 print('File size: {}'.format(total_size))
@@ -31,6 +26,10 @@ try:
                     if val != 0:
                         print('{}: {}'.format(key, val))
             continue
+        try:
+            status_code = int(match.group('status_code'))
+        except ValueError:
+            status_code = ''
         if status_code not in status_codes_dict:
             total_size += int(match.group('file_size'))
             continue
